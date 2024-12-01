@@ -67,14 +67,48 @@
 </head>
 <body>
     <h1>Agregar Departamento</h1>
-    <form method="post">
+    <form method="post" onsubmit="return validateForm()">
         {% csrf_token %}
+        
         <label for="numero">Número:</label>
         <input type="number" id="numero" name="numero" required>
-        <label for="monto_diferenciado">Monto Diferenciado:</label>
-        <input type="number" id="monto_diferenciado" name="monto_diferenciado">
+        
+        <label for="monto_diferenciado">Monto Diferenciado (en pesos chilenos):</label>
+        <input type="number" id="monto_diferenciado" name="monto_diferenciado" step="0.01">
+        
         <button type="submit">Agregar</button>
     </form>
+
     <a href="/">Volver al Dashboard</a>
+
+    <script>
+        function validateForm() {
+            // Obtener los valores de los campos
+            const numero = document.getElementById('numero').value;
+            const montoDiferenciado = document.getElementById('monto_diferenciado').value;
+
+            // Validar que el número del departamento no sea negativo
+            if (numero < 0) {
+                alert('El número del departamento no puede ser negativo.');
+                return false; // Evita que el formulario se envíe
+            }
+
+            // Validar que el monto diferenciado no sea menor a 50,000 pesos
+            if (montoDiferenciado < 50000) {
+                alert('El monto diferenciado debe ser de minimo 50,000 pesos chilenos en adelante.');
+                return false; // Evita el envío si no cumple la condición
+            }
+
+            // Validar que el monto diferenciado sea un número válido
+            if (isNaN(montoDiferenciado)) {
+                alert('El monto diferenciado debe ser un número válido en pesos chilenos.');
+                return false;
+            }
+
+            // Si todas las validaciones pasan, se permite el envío del formulario
+            return true;
+        }
+    </script>
 </body>
+
 </html>

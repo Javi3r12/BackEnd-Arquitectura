@@ -34,7 +34,7 @@
             display: block;
             color: #333;
         }
-        input[type="number"], input[type="date"] {
+        input[type="number"], input[type="date"], select {
             width: 100%;
             padding: 8px;
             margin-bottom: 15px;
@@ -80,7 +80,7 @@
 </head>
 <body>
     <h1>Marcar Pago</h1>
-    <form method="post">
+    <form method="post" onsubmit="return validarFormulario()">
         {% csrf_token %}
         <label for="numero_departamento">Número Departamento:</label>
         <input type="number" id="numero_departamento" name="numero_departamento" required><br>
@@ -89,7 +89,21 @@
         <input type="number" id="anio" name="anio" required><br>
         
         <label for="mes">Mes:</label>
-        <input type="number" id="mes" name="mes" required><br>
+        <select id="mes" name="mes" required>
+            <option value="">Seleccionar mes</option>
+            <option value="01">Enero</option>
+            <option value="02">Febrero</option>
+            <option value="03">Marzo</option>
+            <option value="04">Abril</option>
+            <option value="05">Mayo</option>
+            <option value="06">Junio</option>
+            <option value="07">Julio</option>
+            <option value="08">Agosto</option>
+            <option value="09">Septiembre</option>
+            <option value="10">Octubre</option>
+            <option value="11">Noviembre</option>
+            <option value="12">Diciembre</option>
+        </select><br>
         
         <label for="fecha_pago">Fecha de Pago:</label>
         <input type="date" id="fecha_pago" name="fecha_pago" required><br>
@@ -103,5 +117,32 @@
     {% endif %}
 
     <a href="/">Volver al Dashboard</a>
+
+    <script>
+        function validarFormulario() {
+            // Validar número de departamento
+            const numeroDepartamento = document.getElementById('numero_departamento').value;
+            if (numeroDepartamento < 0) {
+                alert('El número de departamento no puede ser negativo.');
+                return false;
+            }
+
+            // Validar año
+            const anio = document.getElementById('anio').value;
+            if (anio < 0 || anio.length !== 4) {
+                alert('El año debe ser un número de 4 dígitos y no puede ser negativo.');
+                return false;
+            }
+
+            // Validar mes
+            const mes = document.getElementById('mes').value;
+            if (mes === "") {
+                alert('Por favor, seleccione un mes.');
+                return false;
+            }
+
+            return true;
+        }
+    </script>
 </body>
 </html>

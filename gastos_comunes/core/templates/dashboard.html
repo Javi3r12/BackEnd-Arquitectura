@@ -6,7 +6,7 @@
     <title>Dashboard de Gastos Comunes</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Arial', sans-serif;
             margin: 0;
             padding: 0;
             background-color: #f4f4f9;
@@ -14,43 +14,72 @@
         header {
             background-color: #6200ee;
             color: white;
-            padding: 10px 20px;
+            padding: 20px;
             text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        header h1 {
+            margin: 0;
         }
         main {
-            padding: 20px;
+            padding: 30px;
+        }
+        h2 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 1.6em;
         }
         table {
             width: 100%;
             border-collapse: collapse;
             margin: 20px 0;
+            background-color: white;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
         table, th, td {
             border: 1px solid #ddd;
         }
         th, td {
-            padding: 10px;
+            padding: 12px;
             text-align: left;
         }
         th {
             background-color: #6200ee;
             color: white;
+            text-transform: uppercase;
+        }
+        td {
+            background-color: #fafafa;
+        }
+        tr:nth-child(even) td {
+            background-color: #f0f0f0;
+        }
+        tr:hover td {
+            background-color: #f1e6ff;
         }
         button {
             background-color: #6200ee;
             color: white;
             border: none;
-            padding: 10px 20px;
+            padding: 12px 20px;
             margin: 10px;
             cursor: pointer;
             border-radius: 5px;
             font-size: 16px;
+            transition: background-color 0.3s ease;
         }
         button:hover {
             background-color: #5c00d1;
         }
         .button-container {
-            margin-top: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 30px;
+        }
+        .button-container a {
+            text-decoration: none;
         }
     </style>
 </head>
@@ -59,63 +88,47 @@
         <h1>Dashboard de Gastos Comunes</h1>
     </header>
     <main>
-        <h2>Lista de Gastos Pendientes</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>Departamento</th>
-                    <th>Periodo</th>
-                    <th>Monto</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for gasto in gastos_pendientes %}
-                <tr>
-                    <td>{{ gasto.departamento }}</td>
-                    <td>{{ gasto.periodo }}</td>
-                    <td>{{ gasto.monto }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+        <section>
+            <h2>Lista de Departamentos</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Departamento</th>
+                        <th>Monto Diferenciado</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for departamento in departamentos %}
+                    <tr>
+                        <td>{{ departamento.numero }}</td>
+                        <td>{{ departamento.monto_diferenciado }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </section>
 
-        <h2>Lista de Departamentos</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>Departamento</th>
-                    <th>Monto Diferenciado</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for departamento in departamentos %}
-                <tr>
-                    <td>{{ departamento.numero }}</td>
-                    <td>{{ departamento.monto_diferenciado }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-
-        <h2>Lista de Gastos Comunes Generados</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>Departamento</th>
-                    <th>Periodo</th>
-                    <th>Monto</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for gasto in gastos_comunes %}
-                <tr>
-                    <td>{{ gasto.departamento }}</td>
-                    <td>{{ gasto.periodo }}</td>
-                    <td>{{ gasto.monto }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+        <section>
+            <h2>Lista de Gastos Comunes Generados</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Departamento</th>
+                        <th>Periodo</th>
+                        <th>Monto</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for gasto in gastos_comunes %}
+                    <tr>
+                        <td>{{ gasto.departamento }}</td>
+                        <td>{{ gasto.periodo }}</td>
+                        <td>{{ gasto.monto }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </section>
 
         <div class="button-container">
             <a href="/api/departamento/agregar">
