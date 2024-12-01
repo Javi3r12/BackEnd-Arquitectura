@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Marcar Pago</title>
+</head>
+<body>
+    <h1>Marcar Pago</h1>
+    <form method="post">
+        {% csrf_token %}
+        <label>Número Departamento:</label>
+        <input type="number" name="numero_departamento" required><br>
+        <label>Año:</label>
+        <input type="number" name="anio" required><br>
+        <label>Mes:</label>
+        <input type="number" name="mes" required><br>
+        <label>Fecha de Pago:</label>
+        <input type="date" name="fecha_pago" required><br>
+        <button type="submit">Marcar Pago</button>
+    </form>
+    {% if resultado %}
+        <h2>Resultado:</h2>
+        <pre>{{ resultado }}</pre>
+    {% endif %}
+    <a href="/">Volver al Dashboard</a>
+</body>
+</html>

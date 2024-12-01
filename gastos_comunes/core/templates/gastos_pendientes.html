@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Gastos Pendientes</title>
+</head>
+<body>
+    <h1>Gastos Pendientes</h1>
+    <table border="1">
+        <tr>
+            <th>Departamento</th>
+            <th>Periodo</th>
+            <th>Monto</th>
+        </tr>
+        {% for gasto in gastos_pendientes.gastos_pendientes %}
+        <tr>
+            <td>{{ gasto.departamento }}</td>
+            <td>{{ gasto.periodo }}</td>
+            <td>{{ gasto.monto }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    <a href="/">Volver al Dashboard</a>
+</body>
+</html>
