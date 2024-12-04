@@ -82,16 +82,18 @@ def dashboard(request):
     ]
     
     # Obtiene los gastos comunes generados
-    gastos_comunes = GastoComun.objects.all().values('departamento__numero', 'monto', 'periodo')
+    gastos_comunes = GastoComun.objects.all()
     # Prepara los datos de los gastos comunes
     gastos_comunes = [
-        {
-            "departamento": gasto["departamento__numero"],
-            "monto": f"${gasto['monto']:,.0f} CLP",
-            "periodo": gasto["periodo"]
-        }
-        for gasto in gastos_comunes
-    ]
+    {
+        "departamento": gasto.departamento.numero,  # Accedemos al atributo `numero` del departamento
+        "monto": f"${gasto.monto:,.0f} CLP",        # Formateamos el monto
+        "periodo": gasto.periodo,                    # Accedemos al periodo
+        "pagado": gasto.pagado,                       # El estado actual de pago
+        "estado_pago": "ESTA PAGADO" if gasto.pagado else "No está pagado"  # Si pagado es True o False, mostramos el mensaje correspondiente
+    }
+    for gasto in gastos_comunes
+]
     
     # Prepara los datos para pasar a la plantilla
     return render(request, 'dashboard.html', {
